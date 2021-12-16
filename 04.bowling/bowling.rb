@@ -12,7 +12,7 @@ def calculate(frames)
       # ストライクの場合
       result += if strike?(frame)
                   # 連続でストライクのとき
-                  if frames[index + 1][0] == 10
+                  if strike?(frames[index + 1])
                     frames[index + 1][0] + frames[index + 2][0]
                   else
                     frames[index + 1][0] + frames[index + 1][1]
@@ -40,10 +40,6 @@ scores.each do |s|
   end
 end
 
-frames = []
-shots.each_slice(2) do |s|
-  frames << s
-end
+frames = shots.each_slice(2).to_a
 
-result = calculate(frames)
-puts result
+puts calculate(frames)
